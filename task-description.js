@@ -1,93 +1,18 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const param = new URLSearchParams(window.location.search);
-    const taskId = param.get('taskId');
-    document.getElementById('task-title').textContent += ' ' + taskId;
-    
+    const urlParams = new URLSearchParams(window.location.search);
+    const taskId = urlParams.get('taskId');
+
     if (taskId) {
-        reload(taskId);
-    }
-    else {
+        fetch(`http://localhost:3000/tasks/${taskId}`)
+            .then(response => response.json())
+            .then(task => {
+                document.getElementById('task-title').textContent += taskId;
+                document.getElementById('task-name').textContent = task.title;
+                document.getElementById('task-description').textContent = task.description;
+                document.getElementById('final-date').textContent = task.final_date;
+            })
+            .catch(error => console.error('Erreur:', error));
+    } else {
         document.getElementById('task-title').textContent = 'Tâche introuvable';
     }
 });
-
-function edit(fieldId, btn) {
-    const field = document.getElementById(fieldId);
-    const current = field.textContent;
-    let input;
-
-    // Vérifie si le champ à modifier est une date
-    if (fieldId == 'final-date') {
-        input = document.createElement('input');
-        input.type = 'date';
-        input.value = current; // Assurez-vous que la valeur actuelle est au format de date approprié
-    } 
-    else {
-        input = document.createElement('input');
-        input.type = 'text';
-        input.value = current;
-    }
-
-    btn.style.display = 'none';
-    // Remplace le contenu du champ par le champ de saisie
-    field.innerHTML = '';
-    field.appendChild(input);
-
-    // Crée et ajoute le bouton de sauvegarde
-    const saveButton = document.createElement('button');
-    saveButton.textContent = 'Valider';
-    saveButton.onclick = function() { save(fieldId, btn); };
-    field.appendChild(saveButton);
-}
-
-
-function save(fieldId, btn) {
-    const field = document.getElementById(fieldId);
-    const input = field.querySelector('input');
-    const modif = input.value;
-    const param = new URLSearchParams(window.location.search);
-    const taskId = param.get('taskId');
-    if (!modif) {
-        alert('The field cannot be empty');
-        return;
-    }
-    else {
-        fetch(`http://localhost:3000/tasks/${taskId}`).then(response => response.json())
-        .then(task => {
-
-            if (fieldId == 'task-name') {
-                task.title = modif;
-            } 
-            else if (fieldId == 'task-description') {
-                task.description = modif;
-            } 
-            else if (fieldId == 'final-date') {
-                task.final_date = modif;
-            }
-
-            return fetch(`http://localhost:3000/tasks/${taskId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(task)
-            });
-        }).then(response => response.json())
-        .then(() => {
-            reload(taskId);
-            btn.style.display = '';
-        }).catch(error => console.error('Error:', error));
-    }
-}
-
-function reload(taskId) {
-    fetch(`http://localhost:3000/tasks/${taskId}`)
-    .then(response => response.json())
-        .then(task => {
-            console.log(task); // Voir les données reçues
-            document.getElementById('task-name').textContent = task.title;
-            document.getElementById('task-description').textContent = task.description;
-            document.getElementById('final-date').textContent = task.final_date;
-        }).catch(error => console.error('Error:', error));
-    
-}
