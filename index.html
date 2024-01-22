@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste de Tâches</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="task-container">
+        <h1>TODO List</h1>
+
+        <!-- Section de saisie -->
+        <div id="task-inputs">
+            <input type="text" id="title-input" placeholder="Task Title">
+            <input type="text" id="description-input" placeholder="Description">
+            <input type="date" id="final_date-input">
+            <button id="add-task-btn">Add</button>
+        </div>
+
+        <!-- Tableau de tâches -->
+        <table id="task-table">
+            <thead>
+                <tr>
+                    <th>Task Numbers</th>
+                    <th>Tasks</th>
+                    <th>Duedate</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Les tâches seront ajoutées ici -->
+            </tbody>
+        </table>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

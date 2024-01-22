@@ -1,0 +1,93 @@
+body, html {
+    height: 100%; /* Assure que la hauteur de la page est de 100% */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* Centre horizontalement */
+    align-items: center; /* Centre verticalement */
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+#task-container {
+    width: 80%;
+    max-width: 800px; /* Vous pouvez ajuster la largeur maximale selon vos besoins */
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+table {
+    border: 2px solid #ddd;
+}
+
+
+#task-inputs {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#task-inputs input[type="text"],
+#task-inputs input[type="date"] {
+    padding: 8px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+#add-task-btn {
+    padding: 8px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#add-task-btn:hover {
+    background-color: #45a049;
+}
+
+#task-table button {
+    background-color: #ff0000; /* Fond rouge */
+    border: none;             /* Supprimer la bordure par défaut */
+    border-radius: 10px;      /* Bords arrondis */
+    color: white;             /* Texte en blanc pour un meilleur contraste */
+    cursor: pointer;          /* Curseur en forme de pointeur */
+    padding: 5px 10px;        /* Espacement interne */
+    margin: 5px;              /* Ajouter un peu d'espace autour du bouton */
+    line-height: 1;           /* Hauteur de ligne standard */
+    display: flex;            /* Utiliser flexbox pour centrer l'icône */
+    justify-content: center;  /* Centrer horizontalement */
+    align-items: center;      /* Centrer verticalement */
+}
+
+#task-table button img {
+    height: 20px;  /* Hauteur de l'icône ajustée */
+    width: auto;   /* Largeur automatique pour maintenir les proportions */
+}
