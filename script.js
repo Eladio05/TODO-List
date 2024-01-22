@@ -70,10 +70,18 @@ function addTaskToTable(task) {
 
     const deleteBtn = document.createElement('button');
     deleteBtn.innerHTML = '<img src="assets/trash_icon.png"></img>';
-    deleteBtn.onclick = function() { deleteTask(task.id, deleteBtn); };
+    deleteBtn.onclick = function() {deleteTask(task.id, deleteBtn);};
+
+    const seeBtn = document.createElement("button");
+    seeBtn.textContent = "Consulter";
+    seeBtn.onclick = function() {viewTaskDescription(task.id);};
+    row.appendChild(seeBtn);
     row.appendChild(deleteBtn);
 }
 
+function viewTaskDescription(taskId) {
+    window.location.href = `task-description.html?taskId=${taskId}`;
+}
 
 
 function clearInputFields() {
