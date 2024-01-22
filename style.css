@@ -1,17 +1,17 @@
 body, html {
-    height: 100%; /* Assure que la hauteur de la page est de 100% */
+    height: 100%; 
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center; /* Centre horizontalement */
-    align-items: center; /* Centre verticalement */
+    justify-content: center; 
+    align-items: center; 
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
 }
 
 #task-container {
     width: 80%;
-    max-width: 800px; /* Vous pouvez ajuster la largeur maximale selon vos besoins */
+    max-width: 800px; 
     padding: 20px;
     background-color: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -74,20 +74,20 @@ table {
 }
 
 #task-table button {
-    background-color: #ff0000; /* Fond rouge */
-    border: none;             /* Supprimer la bordure par défaut */
-    border-radius: 10px;      /* Bords arrondis */
-    color: white;             /* Texte en blanc pour un meilleur contraste */
-    cursor: pointer;          /* Curseur en forme de pointeur */
-    padding: 5px 10px;        /* Espacement interne */
-    margin: 5px;              /* Ajouter un peu d'espace autour du bouton */
-    line-height: 1;           /* Hauteur de ligne standard */
-    display: flex;            /* Utiliser flexbox pour centrer l'icône */
-    justify-content: center;  /* Centrer horizontalement */
-    align-items: center;      /* Centrer verticalement */
+    background-color: #ff0000;
+    border: none;             
+    border-radius: 10px;      
+    color: white;            
+    cursor: pointer;        
+    padding: 5px 10px;       
+    margin: 5px;              
+    line-height: 1;          
+    display: flex;            
+    justify-content: center;  
+    align-items: center;      
 }
 
 #task-table button img {
-    height: 20px;  /* Hauteur de l'icône ajustée */
-    width: auto;   /* Largeur automatique pour maintenir les proportions */
+    height: 20px;  
+    width: auto;   
 }
