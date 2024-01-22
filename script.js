@@ -1,9 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     fetch('http://localhost:3000/tasks').then(response => response.json())
     .then(tasks => {
-            tasks.forEach(addTaskToTable);
-        })
-        .catch(error => console.error('Erreur:', error));
+            tasks.forEach(updateTable);
+        }).catch(error => console.error('Erreur:', error));
 });
 
 
@@ -36,16 +35,15 @@ function createTask(task) {
         },
         body: JSON.stringify(task)
     }).then(response => response.json()).then(data => {
-        addTaskToTable(data);
-        clearInputFields();
+        updateTable(data);
+        clear();
     }).catch(error => console.error('Erreur:', error));
 }
 
 function deleteTask(taskId, buttonElement) {
     fetch(`http://localhost:3000/tasks/${taskId}`, {
         method: 'DELETE'
-    })
-    .then(response => {
+    }).then(response => {
         if (response.ok) {
             // Supprimer la ligne du tableau
             const row = buttonElement.closest('tr');
@@ -53,12 +51,11 @@ function deleteTask(taskId, buttonElement) {
         } else {
             alert('Erreur lors de la suppression de la tâche');
         }
-    })
-    .catch(error => console.error('Erreur:', error));
+    }).catch(error => console.error('Erreur:', error));
 }
 
 
-function addTaskToTable(task) {
+function updateTable(task) {
     const tableBody = document.getElementById('task-table').querySelector('tbody');
     const row = document.createElement('tr');
     row.innerHTML = `
@@ -74,18 +71,18 @@ function addTaskToTable(task) {
 
     const seeBtn = document.createElement("button");
     seeBtn.textContent = "Consulter";
-    seeBtn.onclick = function() {viewTaskDescription(task.id);};
+    seeBtn.onclick = function() {goDetails(task.id);};
     row.appendChild(seeBtn);
     row.appendChild(deleteBtn);
 }
 
-function viewTaskDescription(taskId) {
+function goDetails(taskId) {
     window.location.href = `task-description.html?taskId=${taskId}`;
 }
 
 
-function clearInputFields() {
+function clear() {
     document.getElementById('title-input').value = '';
     document.getElementById('description-input').value = '';
-    document.getElementById('due-date-input').value = '';
+    document.getElementById('final_date-input').value = '';
 }

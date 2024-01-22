@@ -45,6 +45,7 @@ app.post('/tasks', (req, res) => {
     };
     tasks.push(task);
     res.status(201).send(task);
+    console.log(task);
     console.log("Task added successfully");
 });
 
@@ -57,15 +58,17 @@ app.put('/tasks/:id', (req, res) => {
     task.description = req.body.description;
     task.final_date = req.body.final_date;
     res.send(task);
+    console.log(task);
 });
 
 
 app.delete('/tasks/:id', (req, res) => {
     const taskIndex = tasks.findIndex(t => t.id === parseInt(req.params.id));
     if (taskIndex === -1) {
-        return res.status(404).send('Tâche non trouvée');
+        return res.status(404).send('Task not found ');
     }
     tasks.splice(taskIndex, 1);
     res.status(204).send();
+    console.log("Task deleted");
 });
 
