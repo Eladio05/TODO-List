@@ -79,8 +79,7 @@ function save(fieldId, btn) {
 }
 
 function reload(taskId) {
-    fetch(`http://localhost:3000/tasks/${taskId}`)
-    .then(response => response.json())
+    fetch(`http://localhost:3000/tasks/${taskId}`).then(response => response.json())
         .then(task => {
             console.log(task); 
             document.getElementById('task-name').textContent = task.title;

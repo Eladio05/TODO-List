@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     .then(tasks => {
             tasks.forEach(updateTable);
         }).catch(error => console.error('Erreur:', error));
+    reminder();
 });
 
 
@@ -14,7 +15,7 @@ function addTask() {
     const final_dateInput = document.getElementById('final_date-input').value.trim();
 
     if (!titleInput || !descriptionInput || !final_dateInput) {
-        alert('Tous les champs doivent être remplis.');
+        alert('All fields must be completed.');
         return;
     }
 
@@ -45,11 +46,11 @@ function deleteTask(taskId, buttonElement) {
         method: 'DELETE'
     }).then(response => {
         if (response.ok) {
-            // Supprimer la ligne du tableau
             const row = buttonElement.closest('tr');
             row.remove();
-        } else {
-            alert('Erreur lors de la suppression de la tâche');
+        } 
+        else {
+            alert('Error deleting task');
         }
     }).catch(error => console.error('Erreur:', error));
 }
@@ -70,7 +71,7 @@ function updateTable(task) {
     deleteBtn.onclick = function() {deleteTask(task.id, deleteBtn);};
 
     const seeBtn = document.createElement("button");
-    seeBtn.textContent = "Consulter";
+    seeBtn.textContent = " Consult";
     seeBtn.onclick = function() {goDetails(task.id);};
     row.appendChild(seeBtn);
     row.appendChild(deleteBtn);
@@ -85,4 +86,27 @@ function clear() {
     document.getElementById('title-input').value = '';
     document.getElementById('description-input').value = '';
     document.getElementById('final_date-input').value = '';
+}
+
+
+function reminder() {
+    fetch('http://localhost:3000/tasks').then(response => response.json())
+        .then(tasks => {
+            tasks.forEach(task => {
+                if (compareDate(task.final_date) == true) {
+                    alert(`Reminder: Task "${task.title}" is due today.`);
+                }
+            });
+        }).catch(error => console.error('Error:', error));
+}
+
+function compareDate(date) {
+    const today = new Date();
+    const dueDate = new Date(date);
+    if(dueDate.getDay() == today.getDay() && dueDate.getMonth() == today.getMonth() && dueDate.getFullYear() == today.getFullYear()) {
+        return true
+    }
+    else {
+        return false
+    }
 }
