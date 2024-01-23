@@ -1,21 +1,21 @@
-document.addEventListener('DOMContentLoaded', function() {
-    fetch('http://localhost:3000/tasks').then(response => response.json())
+document.addEventListener("DOMContentLoaded", function() {
+    fetch("http://localhost:3000/tasks").then(response => response.json())
     .then(tasks => {
             tasks.forEach(updateTable);
-        }).catch(error => console.error('Erreur:', error));
-    reminder();
+        }).catch(error => console.error("Error:", error));
+    setTimeout(reminder,1000);
 });
 
 
-document.getElementById('add-task-btn').addEventListener('click', addTask);
+document.getElementById("add-task-btn").addEventListener("click", addTask);
 
 function addTask() {
-    const titleInput = document.getElementById('title-input').value.trim();
-    const descriptionInput = document.getElementById('description-input').value.trim();
-    const final_dateInput = document.getElementById('final_date-input').value.trim();
+    const titleInput = document.getElementById("title-input").value.trim();
+    const descriptionInput = document.getElementById("description-input").value.trim();
+    const final_dateInput = document.getElementById("final_date-input").value.trim();
 
     if (!titleInput || !descriptionInput || !final_dateInput) {
-        alert('All fields must be completed.');
+        alert("All fields must be completed.");
         return;
     }
 
@@ -29,52 +29,57 @@ function addTask() {
 }
 
 function createTask(task) {
-    fetch('http://localhost:3000/tasks', {
-        method: 'POST',
+    fetch("http://localhost:3000/tasks", {
+        method: "POST",
         headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
         },
         body: JSON.stringify(task)
     }).then(response => response.json()).then(data => {
         updateTable(data);
         clear();
-    }).catch(error => console.error('Erreur:', error));
+    }).catch(error => console.error("Erreur:", error));
 }
 
 function deleteTask(taskId, buttonElement) {
     fetch(`http://localhost:3000/tasks/${taskId}`, {
-        method: 'DELETE'
+        method: "DELETE"
     }).then(response => {
         if (response.ok) {
-            const row = buttonElement.closest('tr');
+            const row = buttonElement.closest("tr");
             row.remove();
         } 
         else {
-            alert('Error deleting task');
+            alert("Error deleting task");
         }
-    }).catch(error => console.error('Erreur:', error));
+    }).catch(error => console.error("Erreur:", error));
 }
 
 
 function updateTable(task) {
-    const tableBody = document.getElementById('task-table').querySelector('tbody');
-    const row = document.createElement('tr');
-    row.innerHTML = `
-        <td>${task.id}</td>
-        <td>${task.title}</td>
-        <td>${task.final_date}</td>
-    `;
-    tableBody.appendChild(row);
+    fetch("http://localhost:3000/tasks").then(response => response.json())
+    .then(tasks => {
+        const tableBody = document.getElementById("task-table").querySelector("tbody");
+        tableBody.innerHTML = ""; 
+        tasks.forEach(task => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${task.ID}</td>
+                <td>${task.Title}</td>
+                <td>${task.Final_Date}</td>
+            `;
+            const deleteBtn = document.createElement("button");
+            deleteBtn.innerHTML = "<img src='assets/trash_icon.png'></img>";
+            deleteBtn.onclick = function() {deleteTask(task.ID, deleteBtn);};
 
-    const deleteBtn = document.createElement('button');
-    deleteBtn.innerHTML = '<img src="assets/trash_icon.png"></img>';
-    deleteBtn.onclick = function() {deleteTask(task.id, deleteBtn);};
-
-    const seeBtn = document.createElement("button");
-    seeBtn.textContent = " Consult";
-    seeBtn.onclick = function() {goDetails(task.id);};
-    row.appendChild(seeBtn);
-    row.appendChild(deleteBtn);
+            const seeBtn = document.createElement("button");
+            seeBtn.textContent = " Consult";
+            seeBtn.onclick = function() {goDetails(task.ID);};
+            row.appendChild(seeBtn);
+            row.appendChild(deleteBtn);
+            tableBody.appendChild(row);
+        });
+    }).catch(error => console.error("Erreur:", error));
 }
 
 function goDetails(taskId) {
@@ -83,27 +88,27 @@ function goDetails(taskId) {
 
 
 function clear() {
-    document.getElementById('title-input').value = '';
-    document.getElementById('description-input').value = '';
-    document.getElementById('final_date-input').value = '';
+    document.getElementById("title-input").value = "";
+    document.getElementById("description-input").value = "";
+    document.getElementById("final_date-input").value = "";
 }
 
 
 function reminder() {
-    fetch('http://localhost:3000/tasks').then(response => response.json())
+    fetch("http://localhost:3000/tasks").then(response => response.json())
         .then(tasks => {
             tasks.forEach(task => {
-                if (compareDate(task.final_date) == true) {
-                    alert(`Reminder: Task "${task.title}" is due today.`);
+                if (compareDate(task.Final_Date) == true) {
+                    alert(`Reminder: Task "${task.Title}" is due today.`);
                 }
             });
-        }).catch(error => console.error('Error:', error));
+        }).catch(error => console.error("Error:", error));
 }
 
 function compareDate(date) {
     const today = new Date();
     const dueDate = new Date(date);
-    if(dueDate.getDay() == today.getDay() && dueDate.getMonth() == today.getMonth() && dueDate.getFullYear() == today.getFullYear()) {
+    if(dueDate.getDate() === today.getDate() && dueDate.getMonth() === today.getMonth() && dueDate.getFullYear() === today.getFullYear()) {
         return true
     }
     else {

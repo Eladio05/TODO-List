@@ -1,74 +1,83 @@
-const express = require('express');
-const cors = require('cors');
+const express = require("express");
+const cors = require("cors");
+const sqlite3 = require("sqlite3").verbose();
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-const tasks = [];
+
+const db = new sqlite3.Database("taskList.db", sqlite3.OPEN_READWRITE, (err) => {
+    if (err) return console.error(err.message);
+    console.log("Connected to the taskList.db SQLite database.");
+});
 
 app.listen(3000, () => {
-    console.log('Serveur start on port 3000');
+    console.log("Serveur start on port 3000");
 });
 
-
-app.get('/', (req, res) => {
-    res.send('Welcome on my TODO API');
+app.get("/tasks", (req, res) => {
+    const sql = "SELECT * FROM Task";
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+            res.status(500).send(err.message);
+            return;
+        }
+        res.json(rows);
+    });
 });
 
-
-
-app.get('/tasks', (req, res) => {
-    res.json(tasks);
+app.get("/tasks/:id", (req, res) => {
+    const sql = "SELECT * FROM Task WHERE ID = ?";
+    db.get(sql, [req.params.id], (err, row) => {
+        if (err) {
+            res.status(500).send(err.message);
+            return;
+        }
+        if (row) {
+            res.json(row);
+        } else {
+            res.status(404).send('Task not found');
+        }
+    });
 });
-
-
-
-
-app.get('/tasks/:id', (req, res) => {
-    const task = tasks.find(t => t.id === parseInt(req.params.id));
-    if (!task) {
-        return console.log("Task not found")
-    };
-    res.json(task);
-});
-
 
 let cpt = 0;
 
-app.post('/tasks', (req, res) => {
-    const task = {
-        id: ++cpt, 
-        title: req.body.title,
-        description: req.body.description,
-        final_date: req.body.final_date
-    };
-    tasks.push(task);
-    res.status(201).send(task);
-    console.log(task);
-    console.log("Task added successfully");
+app.post("/tasks", (req, res) => {
+    const { title, description, final_date } = req.body;
+    const sql = "INSERT INTO Task (Title, Description, Final_Date) VALUES (?, ?, ?)";
+    db.run(sql, [title, description, final_date], function(err) {
+        if (err) {
+            res.status(500).send(err.message);
+            return;
+        }
+        res.status(201).json({ id: this.lastID, title, description, final_date });
+    });
+});
+
+app.put("/tasks/:id", (req, res) => {
+    const { Title, Description, Final_Date } = req.body;
+    const sql = "UPDATE Task SET Title = ?, Description = ?, Final_Date = ? WHERE ID = ?";
+
+    db.run(sql, [Title, Description, Final_Date, req.params.id], function(err) {
+        if (err) {
+            console.error('Error during task update:', err.message);
+            res.status(500).send(err.message);
+            return;
+        }
+        res.json({ id: req.params.id, Title, Description, Final_Date });
+    });
 });
 
 
-
-app.put('/tasks/:id', (req, res) => {
-    const task = tasks.find(t => t.id === parseInt(req.params.id));
-    if (!task) return res.status(404).send('Task not found');
-    task.title = req.body.title;
-    task.description = req.body.description;
-    task.final_date = req.body.final_date;
-    res.send(task);
-    console.log(task);
+app.delete("/tasks/:id", (req, res) => {
+    const sql = "DELETE FROM Task WHERE ID = ?";
+    db.run(sql, [req.params.id], function(err) {
+        if (err) {
+            res.status(500).send(err.message);
+            return;
+        }
+        res.status(204).send();
+    });
 });
-
-
-app.delete('/tasks/:id', (req, res) => {
-    const taskIndex = tasks.findIndex(t => t.id === parseInt(req.params.id));
-    if (taskIndex === -1) {
-        return res.status(404).send('Task not found ');
-    }
-    tasks.splice(taskIndex, 1);
-    res.status(204).send();
-    console.log("Task deleted");
-});
-
