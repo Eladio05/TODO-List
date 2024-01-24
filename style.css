@@ -6,7 +6,10 @@ body, html {
     justify-content: center; 
     align-items: center; 
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-image: url("assets/background.png");
+    background-size: cover;
+    background-position: center; 
+    background-repeat: no-repeat;
 }
 
 #task-container {
@@ -14,7 +17,9 @@ body, html {
     max-width: 800px; 
     padding: 20px;
     background-color: white;
+    border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    opacity: 97%;
 }
 
 table {
