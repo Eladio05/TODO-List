@@ -34,7 +34,7 @@ function edit(fieldId, btn) {
     field.appendChild(input);
 
     const saveButton = document.createElement("button");
-    saveButton.textContent = "Valider";
+    saveButton.textContent = "Confirm";
     saveButton.onclick = function() { save(fieldId, btn); };
     field.appendChild(saveButton);
 }

@@ -38,7 +38,7 @@ function createTask(task) {
     }).then(response => response.json()).then(data => {
         updateTable(data);
         clear();
-    }).catch(error => console.error("Erreur:", error));
+    }).catch(error => console.error("Error:", error));
 }
 
 function deleteTask(taskId, buttonElement) {
@@ -52,7 +52,7 @@ function deleteTask(taskId, buttonElement) {
         else {
             alert("Error deleting task");
         }
-    }).catch(error => console.error("Erreur:", error));
+    }).catch(error => console.error("Error:", error));
 }
 
 
@@ -81,7 +81,7 @@ function updateTable(task) {
             row.appendChild(deleteBtn);
             tableBody.appendChild(row);
         });
-    }).catch(error => console.error("Erreur:", error));
+    }).catch(error => console.error("Error:", error));
 }
 
 function goDetails(taskId) {
