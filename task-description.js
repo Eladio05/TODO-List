@@ -17,6 +17,15 @@ function edit(fieldId, btn) {
     const current = field.textContent;
     let input;
 
+    const disable = document.querySelectorAll(".modify-button");
+    disable.forEach(button => {
+        if (button !== btn) {
+            button.disabled = true;
+            button.style.backgroundColor = "#7b7c7b";
+            button.style.cursor = "not-allowed";
+        }
+    });
+
     if (fieldId == "final-date") {
         input = document.createElement("input");
         input.type = "date";
@@ -35,7 +44,7 @@ function edit(fieldId, btn) {
 
     const saveButton = document.createElement("button");
     saveButton.textContent = "Confirm";
-    saveButton.onclick = function() { save(fieldId, btn); };
+    saveButton.onclick = function() {save(fieldId, btn);};
     field.appendChild(saveButton);
 }
 
@@ -74,6 +83,12 @@ function save(fieldId, btn) {
         }).then(response => response.json())
         .then(() => {
             reload(taskId);
+            const disable = document.querySelectorAll(".modify-button");
+            disable.forEach(button => {
+                button.disabled = false;
+                button.style.backgroundColor = "";
+                button.style.cursor = "";
+            });
             btn.style.display = "";
         }).catch(error => console.error("Error:", error));
     }

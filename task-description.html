@@ -9,18 +9,18 @@
 <body>
     <div class="container">
         <h1 id="task-title">Task</h1>
-        <div class="task-detail">
-            <span><strong>Task : </strong><span id="task-name"></span></span>
-            <button onclick="edit('task-name', this)">Modify</button>
-        </div>
-        <div class="task-detail">
-            <span><strong>Description : </strong><span id="task-description"></span></span>
-            <button onclick="edit('task-description', this)">Modify</button>
-        </div>
-        <div class="task-detail">
-            <span><strong>Due date : </strong><span id="final-date"></span></span>
-            <button onclick="edit('final-date',this)">Modify</button>
-        </div>
+            <div class="task-detail">
+                <span><strong>Task : </strong><span id="task-name"></span></span>
+                <button class="modify-button" onclick="edit('task-name', this)">Edit</button>
+            </div>
+            <div class="task-detail">
+                <span><strong>Description : </strong><span id="task-description"></span></span>
+                <button class="modify-button" onclick="edit('task-description', this)">Edit</button>
+            </div>
+            <div class="task-detail">
+                <span><strong>Due date : </strong><span id="final-date"></span></span>
+                <button class="modify-button" onclick="edit('final-date',this)">Edit</button>
+            </div>
     </div>
     <script src="task-description.js"></script>
 </body>
