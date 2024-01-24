@@ -26,7 +26,10 @@ table {
 th, td {
     border: 1px solid #ddd;
     padding: 8px;
-    text-align: left;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap; 
+    text-overflow: ellipsis;
 }
 
 th {
@@ -44,6 +47,7 @@ tr:hover {
 
 table {
     border: 2px solid #ddd;
+    text-align: center;
 }
 
 
@@ -73,21 +77,52 @@ table {
     background-color: #45a049;
 }
 
-#task-table button {
-    background-color: #ff0000;
-    border: none;             
-    border-radius: 10px;      
-    color: white;            
-    cursor: pointer;        
-    padding: 5px 10px;       
-    margin: 5px;              
-    line-height: 1;          
-    display: flex;            
-    justify-content: center;  
-    align-items: center;      
+.consult-btn {
+    padding: 5px 10px; 
+    font-size: 14px;
+    border-radius: 4px;
+    background-color: #0da915;
+    color: white;
+    cursor: pointer;
+    border: none;
+    overflow: hidden; 
+    white-space: nowrap; 
+    text-overflow: ellipsis; 
+    max-width: 100%; 
 }
 
-#task-table button img {
-    height: 20px;  
+.delete-btn {
+    width: 40px;
+    height: 30px;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #ca0000;
+    cursor: pointer;
+    border: none;
+    
+}
+
+.delete-btn img {
+    height: 80%;
+    
+}
+
+.see-btn, .delete-btn {
+    display: inline-block; 
+    margin : 5px;
+}
+
+#add-task-btn img{
+    height: 10px;  
     width: auto;   
+}
+
+h1{
+    text-align: center;
+}
+
+@media screen and (max-width: 400px) {
+    .consult-btn {
+        padding: 5px;
+    }
 }

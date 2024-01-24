@@ -1,0 +1,72 @@
+body, html {
+    height: 100%; 
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 80%;
+    max-width: 500px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.task-detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.task-detail span {
+    display: inline-block;
+    max-width: 80%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    vertical-align: top;
+}
+
+
+button {
+    padding: 5px 10px;
+    margin-left: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+@media screen and (max-width: 800px) {
+    .container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .task-detail {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .task-detail span, button {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    button {
+        margin-top: 10px;
+        margin-left: 0;
+    }
+}

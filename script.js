@@ -70,12 +70,14 @@ function updateTable(task) {
             `;
             const deleteBtn = document.createElement("button");
             deleteBtn.innerHTML = "<img src='assets/trash_icon.png'></img>";
+            deleteBtn.className = "delete-btn";
             deleteBtn.onclick = function() {deleteTask(task.ID, deleteBtn);};
 
-            const seeBtn = document.createElement("button");
-            seeBtn.textContent = " Consult";
-            seeBtn.onclick = function() {goDetails(task.ID);};
-            row.appendChild(seeBtn);
+            const consultBtn = document.createElement("button");
+            consultBtn.textContent = " Consult";
+            consultBtn.className = "consult-btn";
+            consultBtn.onclick = function() {goDetails(task.ID);};
+            row.appendChild(consultBtn);
             row.appendChild(deleteBtn);
             tableBody.appendChild(row);
         });
